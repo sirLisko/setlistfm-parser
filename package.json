@@ -1,0 +1,17 @@
+{
+	"name": "shouldilistenit-api",
+	"description": "API for shouldilistenit",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"lodash": "1.0.x",
+		"node-pubsub": "0.1.x",
+		"requirejs": "2.1.x"
+	},
+	"devDependencies": {
+		"mocha": "1.7"
+	},
+	"scripts": {
+		"test": "make test-all"
+	}
+}
