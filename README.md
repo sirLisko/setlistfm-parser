@@ -11,6 +11,7 @@ API's for Shouldilistenit.
 ### Example of reply
 
 	{
+		"artist": "best_artist",
 		"songs": [
 			{ "name": "foo", "count": 10, "quota": 30 },
 			{ "name": "foobar", "count": 9, "quota": 27 },

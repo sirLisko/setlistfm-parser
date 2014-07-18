@@ -1,17 +1,31 @@
 {
-	"name": "shouldilistenit-api",
-	"description": "API for shouldilistenit",
-	"version": "0.0.1",
-	"private": true,
-	"dependencies": {
-		"lodash": "1.0.x",
-		"node-pubsub": "0.1.x",
-		"requirejs": "2.1.x"
-	},
-	"devDependencies": {
-		"mocha": "1.7"
-	},
-	"scripts": {
-		"test": "make test-all"
-	}
+  "name": "shouldilistenit-api",
+  "version": "0.1.0",
+  "description": "API for shouldilistenit",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sirLisko/shouldilistenit-api.git"
+  },
+  "keywords": [
+    "gig",
+    "music",
+    "playlists"
+  ],
+  "author": "Luca Lischetti",
+  "dependencies": {
+    "body-parser": "~1.4.3",
+    "express": "~4.6.1",
+    "lodash": "~1.0.1",
+    "morgan": "~1.1.1",
+    "q": "~1.0.1",
+    "request": "~2.37.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1"
+  }
 }

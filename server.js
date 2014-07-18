@@ -1,17 +1,24 @@
-/*global console, __dirname */
+'use strict';
 
-var requirejs = require('requirejs');
-var http = require('http');
-var pubsub = require('node-pubsub');
+var express = require('express');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var setList = require('./setList');
 
-requirejs.config({
-	baseUrl: __dirname + '/modules'
+var app = express();
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+
+app.get('/v1/artist/:artistName', function(req, res){
+	var artist = req.params.artistName;
+
+	setList.getTracks(artist).then(function(menu){
+		res.send(menu);
+	}).done();
 });
 
-requirejs(['handleRequest'], function(handleReq) {
-	'use strict';
+var port = process.env.PORT || 3000;
+app.listen(port);
 
-	http.createServer(handleReq).listen(11200);
-
-	console.log('Server running at http://127.0.0.1:11200/');
-});
+console.log('Listening on port ' + port + '...');
