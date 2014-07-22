@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-var songs;
+var songs, setsTotal;
 
 function populateSongs(song) {
 	songs.push(song['@name'].toLowerCase());
@@ -24,18 +24,18 @@ function extractSetList(setlist){
 	if (setlist instanceof Array){
 		setlist.forEach(function(setlist){
 			if(setlist.sets && setlist.sets.set){
+				setsTotal++;
 				extractSet(setlist.sets.set);
 			}
 		});
-	} else {
-		if(setlist.sets && setlist.sets.set){
-			extractSet(setlist.sets.set);
-		}
+	} else if(setlist.sets && setlist.sets.set){
+		setsTotal++;
+		extractSet(setlist.sets.set);
 	}
 }
 
 function getTracks(setLists){
-	songs = [];
+	songs = []; setsTotal = 0;
 	extractSetList(setLists.setlist);
 
 	var songsTot = songs.length;
@@ -59,7 +59,7 @@ function getTracksOrdered(setLists){
 
 	tracks = _.sortBy(tracks, 'count');
 
-	return {artist: getArtistName(setLists), songs: tracks.reverse(), songsTot: trackList.songsTot};
+	return {artist: getArtistName(setLists), songs: tracks.reverse(), songsTot: trackList.songsTot, setsTot: setsTotal};
 }
 
 exports.getTracks = getTracksOrdered;

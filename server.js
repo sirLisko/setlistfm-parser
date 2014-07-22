@@ -13,8 +13,12 @@ app.use(bodyParser.json());
 app.get('/v1/artist/:artistName', function(req, res){
 	var artist = req.params.artistName;
 
+	res.header('Access-Control-Allow-Origin', 'http://shouldilisten.it');
+
 	setList.getTracks(artist).then(function(menu){
 		res.send(menu);
+	}, function(err){
+		res.status(err.statusCode).send(artist);
 	}).done();
 });
 

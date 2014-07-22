@@ -16,16 +16,17 @@
     "music",
     "playlists"
   ],
-  "author": "Luca Lischetti",
+  "author": "Luca Lischetti <sirlisko@gmail.com> (http://sirlisko.com)",
   "dependencies": {
     "body-parser": "~1.4.3",
     "express": "~4.6.1",
-    "lodash": "~1.0.1",
+    "lodash": "^2.4.1",
     "morgan": "~1.1.1",
     "q": "~1.0.1",
     "request": "~2.37.0"
   },
   "devDependencies": {
-    "mocha": "~1.17.1"
+    "mocha": "~1.20.1",
+    "nock": "^0.42.1"
   }
 }

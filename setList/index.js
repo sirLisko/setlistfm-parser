@@ -11,12 +11,12 @@ function getSets(artist) {
 	var defer = q.defer();
 
 	request(domain + path + artist, function(err, resp, body){
-		if (err) {
-			defer.reject(new Error('error on retrieve artist setlist'));
-		} else if (body.trim() === 'not found') {
-			defer.reject('artist not found');
-		} else {
+		if (!err && resp.statusCode === 200) {
 			defer.resolve(JSON.parse(body).setlists);
+		} else if (resp.statusCode === 404) {
+			defer.reject({ statusCode: 404 });
+		} else {
+			defer.reject({ statusCode: 500 });
 		}
 	});
 
