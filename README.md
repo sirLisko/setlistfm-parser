@@ -1,25 +1,29 @@
-shoudilistenit-api
-==================
+#Setlist.fm Parser
 
-API's for Shouldilistenit.
+A Promises based parser for [http://www.setlist.fm](http://www.setlist.fm). 
 
-**Shouldilistenit** set you up for your next Gig.
+### Methods
+#### setList.getTracks(artist)
+Return all the tracks played by an `artist`, in the last year of gigs.
+### Example
 
-## API
-	/v1/artist/<artistname>
+```js
+var setList = require('setlist');
 
-### Example of reply
-
-	{
-		"artist": "artistname",
-		"songs": [
-			{ "title": "foo", "count": 10 },
-			{ "title": "foobar", "count": 9 },
-			{ "title": "barfoo", "count": 7 },
-			{ "title": "foobarfoo", "count": 3 },
-			{ "title": "bar", "count": 3 },
-			{ "title": "barfoobar", "count": 13 }
-		],
-		"songsTot": 33
-		"setsTot": 2
-	}
+setList.getTracks('the strokes').then(console.log).done(); 
+```
+output:
+```js
+{
+    artist: 'The Strokes',
+    songs: [ 
+        { title: 'new york city cops', count: 4 },
+        { title: 'you only live once', count: 4 },
+        { title: 'the end has no end', count: 4 },
+        { title: 'someday', count: 4 },
+        ...
+     ],
+    songsTot: 72,
+    setsTot: 4
+}
+```

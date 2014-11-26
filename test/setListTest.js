@@ -2,8 +2,8 @@
 
 var assert = require('assert');
 var nock = require('nock');
-var setList = require('../setList/index.js');
-var parser = require('../setList/parser.js');
+var setList = require('../index.js');
+var parser = require('../parser.js');
 
 suite('setList', function(){
 	'use strict';
@@ -48,25 +48,6 @@ suite('setList', function(){
 
 		setList.getTracks('muse').then(null, function(err){
 			assert.equal(err.statusCode, 500);
-		}).done();
-
-		setTimeout(function() {
-			apiSetList.done();
-			done();
-		}, 0);
-	});
-
-	test('should return the credits if api.setlist.fm returns 200', function(done){
-		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?year=2014&artistName=muse')
-			.reply(200, {setlists: 'foo'});
-
-		parser.getTracks = function(){
-			return {};
-		};
-
-		setList.getTracks('muse').then(function(payload){
-			assert.equal(typeof payload.credits, 'string', 'a string is returned as credits');
 		}).done();
 
 		setTimeout(function() {

@@ -1,7 +1,7 @@
 /*global suite, test */
 
 var assert = require('assert');
-var parser = require('../setList/parser.js');
+var parser = require('../parser.js');
 
 suite('parser', function(){
 	'use strict';
