@@ -5,7 +5,9 @@ var _ = require('lodash');
 var songs, setsTotal;
 
 function populateSongs(song) {
-	songs.push(song['@name'].toLowerCase());
+	if (song['@name'].length) {
+		songs.push(song['@name'].toLowerCase());
+	}
 }
 
 function extractSet(set) {

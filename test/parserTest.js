@@ -33,6 +33,15 @@ suite('parser', function(){
 		done();
 	});
 
+	test('should skip the track if the trackname is empty', function(done){
+		var json = '{"setlist":[{"artist":{"@name":"best_artist"},"sets":{"set":[{"song":[{"@name":""},{"@name":"foo"},{"@name":"bar"}]},{"@encore":"1","song":[{"@name":"foobar"}]}]}}]}';
+		var tracks = parser.getTracks(JSON.parse(json));
+
+		assert.equal(tracks.songsTot, 3, 'the number of songs has to be 3');
+
+		done();
+	});
+
 	test('is working also with only one setlist', function(done){
 		var json = '{"setlist":{"artist":{"@name":"best_artist"},"sets":{"set":{"song":{"@name":"fOo"}}}}}';
 		var tracks = parser.getTracks(JSON.parse(json));
@@ -60,7 +69,6 @@ suite('parser', function(){
 		assert.equal(tracks.setsTot, 1, 'the number of sets has to be 1');
 		done();
 	});
-
 
 	test('should return the correct number of songs', function(done){
 		var tracks = parser.getTracks(JSON.parse(fakeJson));

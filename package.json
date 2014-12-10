@@ -1,6 +1,6 @@
 {
   "name": "setlistfm-parser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Parse the tracks played by an artist from SetListFM",
   "main": "index.js",
   "scripts": {
