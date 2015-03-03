@@ -1,6 +1,8 @@
 #Setlist.fm Parser
 
-A Promises based parser for [http://www.setlist.fm](http://www.setlist.fm). 
+[![dependency Status](https://david-dm.org/sirlisko/setlistfm-parser/status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=dependencies) [![devDependency Status](https://david-dm.org/sirlisko/setlistfm-parser/dev-status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=devDependencies)
+
+A Promises based parser for [http://www.setlist.fm](http://www.setlist.fm).
 
 ### Methods
 #### setList.getTracks(artist)
