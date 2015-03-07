@@ -1,6 +1,6 @@
 #Setlist.fm Parser
 
-[![dependency Status](https://david-dm.org/sirlisko/setlistfm-parser/status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=dependencies) [![devDependency Status](https://david-dm.org/sirlisko/setlistfm-parser/dev-status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=devDependencies)
+[![Build Status](https://travis-ci.org/sirLisko/setlistfm-parser.svg)](https://travis-ci.org/sirLisko/setlistfm-parser) [![dependency Status](https://david-dm.org/sirlisko/setlistfm-parser/status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=dependencies) [![devDependency Status](https://david-dm.org/sirlisko/setlistfm-parser/dev-status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=devDependencies)
 
 A Promises based parser for [http://www.setlist.fm](http://www.setlist.fm).
 
@@ -18,7 +18,7 @@ output:
 ```js
 {
     artist: 'The Strokes',
-    songs: [ 
+    songs: [
         { title: 'new york city cops', count: 4 },
         { title: 'you only live once', count: 4 },
         { title: 'the end has no end', count: 4 },
