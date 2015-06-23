@@ -8,9 +8,9 @@ var parser = require('../parser.js');
 suite('setList', function(){
 	'use strict';
 
-	test('should parse the result if api.setlist.fm returns 200', function(done){
+	test('should parse the result if api.setlist.fm returns 200', function(){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?year=2014&artistName=muse')
+			.get('/rest/0.1/search/setlists.json?artistName=muse&year=' + new Date().getFullYear())
 			.reply(200, {setlists: 'foo'});
 
 		parser.getTracks = function(payload){
@@ -22,13 +22,12 @@ suite('setList', function(){
 
 		setTimeout(function() {
 			apiSetList.done();
-			done();
 		}, 0);
 	});
 
-	test('should return 404 if api.setlist.fm returns not found', function(done){
+	test('should return 404 if api.setlist.fm returns not found', function(){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?year=2014&artistName=muse')
+			.get('/rest/0.1/search/setlists.json?artistName=muse&year=' + new Date().getFullYear())
 			.reply(404, {});
 
 		setList.getTracks('muse').then(null, function(err){
@@ -37,13 +36,12 @@ suite('setList', function(){
 
 		setTimeout(function() {
 			apiSetList.done();
-			done();
 		}, 0);
 	});
 
-	test('should return 500 if api.setlist.fm returns not 200 nor 404', function(done){
+	test('should return 500 if api.setlist.fm returns not 200 nor 404', function(){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?year=2014&artistName=muse')
+			.get('/rest/0.1/search/setlists.json?artistName=muse&year=' + new Date().getFullYear())
 			.reply(502, {});
 
 		setList.getTracks('muse').then(null, function(err){
@@ -52,7 +50,6 @@ suite('setList', function(){
 
 		setTimeout(function() {
 			apiSetList.done();
-			done();
 		}, 0);
 	});
 
