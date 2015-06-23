@@ -13,7 +13,7 @@ suite('setList', function(){
 			.get('/rest/0.1/search/setlists.json?artistName=muse&year=' + new Date().getFullYear())
 			.reply(200, {setlists: 'foo'});
 
-		parser.getTracks = function(payload){
+		parser.parse = function(payload){
 			assert.equal(payload, 'foo', 'the content of setlists is passed to the parser');
 			return {};
 		};

@@ -2,66 +2,74 @@
 
 var _ = require('lodash');
 
-var songs;
-
-function populateSongs(song) {
-	if (song['@name'].length) {
-		songs.push(song['@name'].toLowerCase());
-	}
+function getArtist(sets) {
+	return _
+		.chain(sets)
+		.first()
+		.get('artist[@name]')
+		.value();
 }
 
-function extractSet(set) {
-	if (set instanceof Array){
-		set.forEach(extractSet);
-		return;
-	}
-	if (set.song instanceof Array) {
-		set.song.forEach(populateSongs);
+function formatTracks(tracks) {
+	return _
+		.chain(tracks)
+		.countBy(function(track){
+			return track['@name'].toLowerCase();
+		})
+		.omit('')
+		.map(function(count, track){
+			return { title: track, count: count };
+		}).sortBy(function(track){
+			return -track.count;
+		})
+		.value();
+}
+
+function getTracks(sets) {
+	return _
+		.chain(sets)
+		.map(function(set){
+			return set.song;
+		})
+		.flatten()
+		.value();
+}
+
+function getSets(setsLists){
+	return _
+		.chain(setsLists)
+		.map(function(setList){
+			return setList.sets.set;
+		})
+		.flatten()
+		.compact()
+		.value();
+}
+
+function getSetsLists(requests){
+	var sets = [];
+	if (_.isPlainObject(requests)) {
+		sets.push(requests.setlist);
 	} else {
-		populateSongs(set.song);
-	}
-}
-
-function extractSetList(setlist){
-	if (setlist instanceof Array){
-		setlist.forEach(function(setlist){
-			if(setlist.sets && setlist.sets.set){
-				extractSet(setlist.sets.set);
-			}
+		sets = _.map(requests, function(request){
+			return request.setlist;
 		});
-	} else if(setlist.sets && setlist.sets.set){
-		extractSet(setlist.sets.set);
 	}
+	return _.flatten(sets);
 }
 
-function getTracks(setLists){
-	songs = [];
-	extractSetList(setLists.setlist);
+function parse(setsListsBlob, gigsLimit){
+	var setsLists = getSetsLists(setsListsBlob);
+	setsLists = _.slice(setsLists, 0, gigsLimit);
 
-	var songsTot = songs.length;
-	songs = _.countBy(songs);
+	var tracks = getTracks(getSets(setsLists));
 
-	return {songs: songs, songsTot: songsTot};
+	return {
+		artist: getArtist(setsLists),
+		tracks: formatTracks(tracks),
+		tracksTot: tracks.length,
+		setsTot: setsLists.length
+	};
 }
 
-function getArtistName(setLists){
-	return (setLists.setlist instanceof Array) ? setLists.setlist[0].artist['@name'] : setLists.setlist.artist['@name'];
-}
-
-function getTracksOrdered(setLists){
-	var setsTotal = setLists['@total'];
-	var trackList = getTracks(setLists), tracks = [];
-
-	for (var track in trackList.songs) {
-		if (trackList.songs.hasOwnProperty(track)) {
-			tracks.push({title: track, count: trackList.songs[track]});
-		}
-	}
-
-	tracks = _.sortBy(tracks, 'count');
-
-	return {artist: getArtistName(setLists), songs: tracks.reverse(), songsTot: trackList.songsTot, setsTot: setsTotal};
-}
-
-exports.getTracks = getTracksOrdered;
-exports.getArtistName = getArtistName;
+exports.parse = parse;

@@ -26,7 +26,7 @@ function getSets(artist) {
 function getTracks(artist){
 	var defer = q.defer();
 
-	getSets(artist).then(parser.getTracks).then(function(tracks){
+	getSets(artist).then(parser.parse).then(function(tracks){
 		defer.resolve(tracks);
 	}, defer.reject).done();
 
