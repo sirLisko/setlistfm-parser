@@ -2,23 +2,19 @@
 
 var assert = require('assert');
 var nock = require('nock');
-var setList = require('../index.js');
-var parser = require('../parser.js');
+var setList = require('../modules/setListFm.js');
 
-suite('setList', function(){
+suite('setListFm', function(){
 	'use strict';
 
 	test('should parse the result if api.setlist.fm returns 200', function(){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=muse&year=' + new Date().getFullYear())
+			.get('/rest/0.1/search/setlists.json?artistName=muse&year=2015')
 			.reply(200, {setlists: 'foo'});
 
-		parser.parse = function(payload){
+		setList.getSets('muse')(2015, function(payload){
 			assert.equal(payload, 'foo', 'the content of setlists is passed to the parser');
-			return {};
-		};
-
-		setList.getTracks('muse').done();
+		});
 
 		setTimeout(function() {
 			apiSetList.done();
@@ -27,12 +23,12 @@ suite('setList', function(){
 
 	test('should return 404 if api.setlist.fm returns not found', function(){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=muse&year=' + new Date().getFullYear())
+			.get('/rest/0.1/search/setlists.json?artistName=muse&year=2015')
 			.reply(404, {});
 
-		setList.getTracks('muse').then(null, function(err){
+		setList.getSets('muse')(2015, function(err){
 			assert.equal(err.statusCode, 404);
-		}).done();
+		});
 
 		setTimeout(function() {
 			apiSetList.done();
@@ -41,12 +37,12 @@ suite('setList', function(){
 
 	test('should return 500 if api.setlist.fm returns not 200 nor 404', function(){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=muse&year=' + new Date().getFullYear())
+			.get('/rest/0.1/search/setlists.json?artistName=muse&year=2015')
 			.reply(502, {});
 
-		setList.getTracks('muse').then(null, function(err){
+		setList.getSets('muse')(2015, function(err){
 			assert.equal(err.statusCode, 500);
-		}).done();
+		});
 
 		setTimeout(function() {
 			apiSetList.done();

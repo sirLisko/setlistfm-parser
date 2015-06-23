@@ -3,8 +3,8 @@
 var q = require('q');
 var async = require('async');
 
-var parser = require('./parser');
-var setList = require('./setListFm');
+var parser = require('./modules/parser');
+var setList = require('./modules/setListFm');
 
 function setListResponse(defer){
 	return function(err, results){
