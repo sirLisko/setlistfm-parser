@@ -1,6 +1,6 @@
 {
   "name": "setlistfm-parser",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Parse the tracks played by an artist from SetListFM",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/sirLisko/setlistfm-parser",
   "dependencies": {
+    "async": "^1.2.1",
     "lodash": "^3.9.3",
     "q": "^1.4.1",
     "request": "^2.58.0"

@@ -1,24 +1,26 @@
 'use strict';
 
-var request = require('request');
 var q = require('q');
-var parser = require('./parser');
+var async = require('async');
 
-var domain = 'http://api.setlist.fm';
-var path = '/rest/0.1/search/setlists.json?year=2014&artistName=';
+var parser = require('./parser');
+var setList = require('./setListFm');
+
+function setListResponse(defer){
+	return function(err, results){
+		if (results[0] || results[1]) {
+			defer.resolve(results);
+		} else {
+			defer.reject(err);
+		}
+	};
+}
 
 function getSets(artist) {
 	var defer = q.defer();
+	var currentYear = new Date().getFullYear();
 
-	request(domain + path + artist, function(err, resp, body){
-		if (!err && resp.statusCode === 200) {
-			defer.resolve(JSON.parse(body).setlists);
-		} else if (resp.statusCode === 404) {
-			defer.reject({ statusCode: 404 });
-		} else {
-			defer.reject({ statusCode: 500 });
-		}
-	});
+	async.map([currentYear, currentYear - 1], setList.getSets(artist), setListResponse(defer));
 
 	return defer.promise;
 }
@@ -26,9 +28,10 @@ function getSets(artist) {
 function getTracks(artist){
 	var defer = q.defer();
 
-	getSets(artist).then(parser.parse).then(function(tracks){
-		defer.resolve(tracks);
-	}, defer.reject).done();
+	getSets(artist)
+		.then(parser.parse)
+		.then(defer.resolve, defer.reject)
+		.done();
 
 	return defer.promise;
 }
