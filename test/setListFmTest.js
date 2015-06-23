@@ -1,5 +1,3 @@
-/*global suite, test */
-
 var assert = require('assert');
 var nock = require('nock');
 var setList = require('../modules/setListFm.js');

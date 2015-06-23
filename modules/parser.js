@@ -13,13 +13,13 @@ function getArtist(sets) {
 function formatTracks(tracks) {
 	return _
 		.chain(tracks)
-		.countBy(function(track){
+		.countBy(function (track) {
 			return track['@name'].toLowerCase();
 		})
 		.omit('')
-		.map(function(count, track){
+		.map(function (count, track) {
 			return { title: track, count: count };
-		}).sortBy(function(track){
+		}).sortBy(function (track) {
 			return -track.count;
 		})
 		.value();
@@ -28,17 +28,17 @@ function formatTracks(tracks) {
 function getTracks(sets) {
 	return _
 		.chain(sets)
-		.map(function(set){
+		.map(function (set) {
 			return set.song;
 		})
 		.flatten()
 		.value();
 }
 
-function getSets(setsLists){
+function getSets(setsLists) {
 	return _
 		.chain(setsLists)
-		.map(function(setList){
+		.map(function (setList) {
 			return setList.sets.set;
 		})
 		.flatten()
@@ -46,19 +46,19 @@ function getSets(setsLists){
 		.value();
 }
 
-function getSetsLists(requests){
+function getSetsLists(requests) {
 	var sets = [];
 	if (_.isPlainObject(requests)) {
 		sets.push(requests.setlist);
 	} else {
-		sets = _.map(requests, function(request){
+		sets = _.map(requests, function (request) {
 			return request.setlist;
 		});
 	}
 	return _.flatten(sets);
 }
 
-function parse(setsListsBlob, gigsLimit){
+function parse(setsListsBlob, gigsLimit) {
 	var setsLists = getSetsLists(setsListsBlob);
 	setsLists = _.slice(setsLists, 0, gigsLimit);
 

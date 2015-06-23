@@ -8,10 +8,10 @@ var path = '/rest/0.1/search/setlists.json?artistName={{artist}}&year={{year}}';
 function getSets(artist) {
 	var baseUrl = domain + path.replace('{{artist}}', artist);
 
-	return function(year, callback){
+	return function (year, callback) {
 		var url = baseUrl.replace('{{year}}', year || new Date().getFullYear());
 
-		request(url, function(err, resp, body){
+		request(url, function (err, resp, body) {
 			if (!err && resp.statusCode === 200) {
 				callback(undefined, JSON.parse(body).setlists);
 			} else if (resp.statusCode === 404) {

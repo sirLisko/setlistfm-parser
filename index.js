@@ -6,8 +6,8 @@ var async = require('async');
 var parser = require('./modules/parser');
 var setList = require('./modules/setListFm');
 
-function setListResponse(defer){
-	return function(err, results){
+function setListResponse(defer) {
+	return function (err, results) {
 		if (results[0] || results[1]) {
 			defer.resolve(results);
 		} else {
@@ -25,7 +25,7 @@ function getSets(artist) {
 	return defer.promise;
 }
 
-function getTracks(artist){
+function getTracks(artist) {
 	var defer = q.defer();
 
 	getSets(artist)
