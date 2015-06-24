@@ -1,26 +1,27 @@
 'use strict';
 
+var q = require('q');
 var request = require('request');
 
 var domain = 'http://api.setlist.fm';
-var path = '/rest/0.1/search/setlists.json?artistName={{artist}}&year={{year}}';
+var path = '/rest/0.1/search/setlists.json?artistName={{artist}}';
 
 function getSets(artist) {
-	var baseUrl = domain + path.replace('{{artist}}', artist);
+	var defer = q.defer();
 
-	return function (year, callback) {
-		var url = baseUrl.replace('{{year}}', year || new Date().getFullYear());
+	var url = domain + path.replace('{{artist}}', artist);
 
-		request(url, function (err, resp, body) {
-			if (!err && resp.statusCode === 200) {
-				callback(undefined, JSON.parse(body).setlists);
-			} else if (resp.statusCode === 404) {
-				callback({ statusCode: 404 });
-			} else {
-				callback({ statusCode: 500 });
-			}
-		});
-	};
+	request(url, function(err, resp, body){
+		if (!err && resp.statusCode === 200) {
+			defer.resolve(JSON.parse(body).setlists);
+		} else if (resp.statusCode === 404) {
+			defer.reject({ statusCode: 404 });
+		} else {
+			defer.reject({ statusCode: 500 });
+		}
+	});
+
+	return defer.promise;
 }
 
 exports.getSets = getSets;

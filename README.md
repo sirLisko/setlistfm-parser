@@ -18,14 +18,14 @@ output:
 ```js
 {
     artist: 'The Strokes',
-    songs: [
+    tracks: [
         { title: 'new york city cops', count: 4 },
         { title: 'you only live once', count: 4 },
         { title: 'the end has no end', count: 4 },
         { title: 'someday', count: 4 },
         ...
      ],
-    songsTot: 72,
+    tracksTot: 72,
     setsTot: 4
 }
 ```

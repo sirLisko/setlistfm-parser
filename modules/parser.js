@@ -46,29 +46,15 @@ function getSets(setsLists) {
 		.value();
 }
 
-function getSetsLists(requests) {
-	var sets = [];
-	if (_.isPlainObject(requests)) {
-		sets.push(requests.setlist);
-	} else {
-		sets = _.map(requests, function (request) {
-			return request.setlist;
-		});
-	}
-	return _.flatten(sets);
-}
-
-function parse(setsListsBlob, gigsLimit) {
-	var setsLists = getSetsLists(setsListsBlob);
-	setsLists = _.slice(setsLists, 0, gigsLimit);
-
-	var tracks = getTracks(getSets(setsLists));
+function parse(setListBlob) {
+	var setList = [].concat(setListBlob.setlist);
+	var tracks = getTracks(getSets(setList));
 
 	return {
-		artist: getArtist(setsLists),
+		artist: getArtist(setList),
 		tracks: formatTracks(tracks),
 		tracksTot: tracks.length,
-		setsTot: setsLists.length
+		setsTot: setList.length
 	};
 }
 

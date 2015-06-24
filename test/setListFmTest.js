@@ -5,46 +5,43 @@ var setList = require('../modules/setListFm.js');
 suite('setListFm', function(){
 	'use strict';
 
-	test('should parse the result if api.setlist.fm returns 200', function(){
+	test('should parse the result if api.setlist.fm returns 200', function(done){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=muse&year=2015')
+			.get('/rest/0.1/search/setlists.json?artistName=best_artist')
 			.reply(200, {setlists: 'foo'});
 
-		setList.getSets('muse')(2015, function(payload){
+		setList.getSets('best_artist').then(function(payload){
 			assert.equal(payload, 'foo', 'the content of setlists is passed to the parser');
-		});
 
-		setTimeout(function() {
 			apiSetList.done();
-		}, 0);
+			done();
+		}).done();
 	});
 
-	test('should return 404 if api.setlist.fm returns not found', function(){
+	test('should return 404 if api.setlist.fm returns not found', function(done){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=muse&year=2015')
+			.get('/rest/0.1/search/setlists.json?artistName=best_artist')
 			.reply(404, {});
 
-		setList.getSets('muse')(2015, function(err){
+		setList.getSets('best_artist').then(null, function(err){
 			assert.equal(err.statusCode, 404);
-		});
 
-		setTimeout(function() {
 			apiSetList.done();
-		}, 0);
+			done();
+		}).done();
 	});
 
-	test('should return 500 if api.setlist.fm returns not 200 nor 404', function(){
+	test('should return 500 if api.setlist.fm returns not 200 nor 404', function(done){
 		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=muse&year=2015')
+			.get('/rest/0.1/search/setlists.json?artistName=best_artist')
 			.reply(502, {});
 
-		setList.getSets('muse')(2015, function(err){
+		setList.getSets('best_artist').then(null, function(err){
 			assert.equal(err.statusCode, 500);
-		});
 
-		setTimeout(function() {
 			apiSetList.done();
-		}, 0);
+			done();
+		}).done();
 	});
 
 });
