@@ -1,47 +1,44 @@
-var assert = require('assert');
+'use strict';
+
+var test = require('tape');
 var nock = require('nock');
 var setList = require('../modules/setListFm.js');
 
-suite('setListFm', function(){
-	'use strict';
+test('should parse the result if api.setlist.fm returns 200', function(t){
+	var apiSetList = nock('http://api.setlist.fm')
+		.get('/rest/0.1/search/setlists.json?artistName=best_artist')
+		.reply(200, {setlists: 'foo'});
 
-	test('should parse the result if api.setlist.fm returns 200', function(done){
-		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=best_artist')
-			.reply(200, {setlists: 'foo'});
+	setList.getSets('best_artist').then(function(payload){
+		t.equal(payload, 'foo', 'the content of setlists is passed to the parser');
 
-		setList.getSets('best_artist').then(function(payload){
-			assert.equal(payload, 'foo', 'the content of setlists is passed to the parser');
+		apiSetList.done();
+		t.end();
+	}).done();
+});
 
-			apiSetList.done();
-			done();
-		}).done();
-	});
+test('should return 404 if api.setlist.fm returns not found', function(t){
+	var apiSetList = nock('http://api.setlist.fm')
+		.get('/rest/0.1/search/setlists.json?artistName=best_artist')
+		.reply(404, {});
 
-	test('should return 404 if api.setlist.fm returns not found', function(done){
-		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=best_artist')
-			.reply(404, {});
+	setList.getSets('best_artist').then(null, function(err){
+		t.equal(err.statusCode, 404);
 
-		setList.getSets('best_artist').then(null, function(err){
-			assert.equal(err.statusCode, 404);
+		apiSetList.done();
+		t.end();
+	}).done();
+});
 
-			apiSetList.done();
-			done();
-		}).done();
-	});
+test('should return 500 if api.setlist.fm returns not 200 nor 404', function(t){
+	var apiSetList = nock('http://api.setlist.fm')
+		.get('/rest/0.1/search/setlists.json?artistName=best_artist')
+		.reply(502, {});
 
-	test('should return 500 if api.setlist.fm returns not 200 nor 404', function(done){
-		var apiSetList = nock('http://api.setlist.fm')
-			.get('/rest/0.1/search/setlists.json?artistName=best_artist')
-			.reply(502, {});
+	setList.getSets('best_artist').then(null, function(err){
+		t.equal(err.statusCode, 500);
 
-		setList.getSets('best_artist').then(null, function(err){
-			assert.equal(err.statusCode, 500);
-
-			apiSetList.done();
-			done();
-		}).done();
-	});
-
+		apiSetList.done();
+		t.end();
+	}).done();
 });
