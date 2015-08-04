@@ -1,6 +1,9 @@
 #Setlist.fm Parser
 
-[![Build Status](https://travis-ci.org/sirLisko/setlistfm-parser.svg)](https://travis-ci.org/sirLisko/setlistfm-parser) [![dependency Status](https://david-dm.org/sirlisko/setlistfm-parser/status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=dependencies) [![devDependency Status](https://david-dm.org/sirlisko/setlistfm-parser/dev-status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=devDependencies)
+[![Build Status](https://travis-ci.org/sirLisko/setlistfm-parser.svg)](https://travis-ci.org/sirLisko/setlistfm-parser)
+[![Coverage Status](https://coveralls.io/repos/sirLisko/setlistfm-parser/badge.svg?branch=master&service=github)](https://coveralls.io/github/sirLisko/setlistfm-parser?branch=master)
+[![dependency Status](https://david-dm.org/sirlisko/setlistfm-parser/status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=dependencies)
+[![devDependency Status](https://david-dm.org/sirlisko/setlistfm-parser/dev-status.svg)](https://david-dm.org/sirlisko/setlistfm-parser#info=devDependencies)
 
 A Promises based parser for [http://www.setlist.fm](http://www.setlist.fm).
 
