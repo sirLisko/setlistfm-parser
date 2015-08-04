@@ -4,7 +4,8 @@
   "description": "Parse the tracks played by an artist from SetListFM",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tape test/*"
+    "test": "./node_modules/.bin/tape test/*",
+    "cover": "node_modules/istanbul/lib/cli.js cover test/*"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,8 @@
     "request": "^2.60.0"
   },
   "devDependencies": {
+    "coveralls": "^2.11.3",
+    "istanbul": "^0.3.17",
     "nock": "^2.9.1",
     "tape": "^4.0.2"
   }
