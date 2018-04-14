@@ -1,19 +1,19 @@
-'use strict';
+'use strict'
 
-var q = require('q');
+var q = require('q')
 
-var parser = require('./modules/parser');
-var setList = require('./modules/setListFm');
+var parser = require('./modules/parser')
+var setList = require('./modules/setListFm')
 
-function getTracks(artist) {
-	var defer = q.defer();
+function getTracks (artist) {
+  var defer = q.defer()
 
-	setList.getSets(artist)
-		.then(parser.parse)
-		.then(defer.resolve, defer.reject)
-		.done();
+  setList.getSets(artist)
+    .then(parser.parse)
+    .then(defer.resolve, defer.reject)
+    .done()
 
-	return defer.promise;
+  return defer.promise
 }
 
-exports.getTracks = getTracks;
+exports.getTracks = getTracks
