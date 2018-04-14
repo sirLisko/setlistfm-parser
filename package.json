@@ -1,6 +1,6 @@
 {
   "name": "setlistfm-parser",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Parse the tracks played by an artist from SetListFM",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "gig"
   ],
   "author": "Luca Lischetti",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sirLisko/setlistfm-parser/issues"
   },
@@ -27,7 +27,7 @@
     "async": "^1.4.0",
     "lodash": "^3.10.1",
     "q": "^1.4.1",
-    "request": "^2.60.0"
+    "request": "^2.85.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.3",

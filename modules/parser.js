@@ -6,7 +6,7 @@ function getArtist (sets) {
   return _
     .chain(sets)
     .first()
-    .get('artist[@name]')
+    .get('artist.name')
     .value()
 }
 
@@ -14,7 +14,7 @@ function formatTracks (tracks) {
   return _
     .chain(tracks)
     .countBy(function (track) {
-      return track['@name'].toLowerCase()
+      return track.name.toLowerCase()
     })
     .omit('')
     .map(function (count, track) {
@@ -46,10 +46,8 @@ function getSets (setsLists) {
     .value()
 }
 
-function parse (setListBlob) {
-  var setList = [].concat(setListBlob.setlist)
+function parse (setList) {
   var tracks = getTracks(getSets(setList))
-
   return {
     artist: getArtist(setList),
     tracks: formatTracks(tracks),
