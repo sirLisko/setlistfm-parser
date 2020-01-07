@@ -4,8 +4,8 @@
   "description": "Parse the tracks played by an artist from SetListFM",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*",
-    "cover": "node_modules/istanbul/lib/cli.js cover test/*"
+    "test": "nyc tape test/*",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -25,20 +25,20 @@
   "homepage": "https://github.com/sirLisko/setlistfm-parser",
   "dependencies": {
     "async": "^1.4.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.15",
     "q": "^1.4.1",
     "request": "^2.85.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.3",
+    "coveralls": "^3.0.9",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "istanbul": "^0.3.17",
-    "nock": "^2.9.1",
+    "nock": "^11.7.1",
+    "nyc": "^15.0.0",
     "tape": "^4.0.2"
   }
 }
